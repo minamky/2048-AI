@@ -1,5 +1,5 @@
 grid = [[0, 0, 0, 0],
-        [0, 0, 0, 0],
+        [0, 2, 0, 0],
         [0, 0, 0, 0],
         [0, 0, 0, 0]]
 
@@ -66,4 +66,42 @@ def search_non_zero(row, index):
         return None
 
 
-print(monotonicity(grid))
+def merges_and_empty(grid_, axis=1):
+    empty = 0
+    merges = 0
+    for y in range(4):
+        x = 0
+        while x < 4:
+            if grid[y][x] == 0:
+                x += 1
+                empty += 1
+                continue
+            else:
+                next_ = search_non_zero(grid_[y], x)
+                if next_:
+                    if grid_[y][x] == grid_[y][next_]:
+                        empty += (next_ - x - 1)
+                        merges += 1
+                        x = next_
+                        x += 1
+                    else:
+                        x += 1
+                else:
+                    empty += (3 - x)
+                    break
+    if axis == 1:
+        return [empty, merges]
+    else:
+        return [0, merges]
+
+
+# counts number of empty squares and potential merges
+def total_empty_and_merges(grid_):
+    _grid = []
+    for x in range(4):
+        row = []
+        for y in range(4):
+            row.append(grid_[y][x])
+        _grid.append(row)
+    return [merges_and_empty(grid_)[0] + merges_and_empty(_grid, axis=0)[0],
+            merges_and_empty(grid_)[1] + merges_and_empty(_grid, axis=0)[1]]
