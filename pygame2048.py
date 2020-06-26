@@ -3,11 +3,11 @@ import pygame
 from pygame.time import Clock
 from math import log
 
-
-pygame.init()
-clock = Clock()
-win = pygame.display.set_mode((500, 500))
-pygame.display.set_caption("2048")
+if __name__ == '__main__':
+    pygame.init()
+    clock = Clock()
+    win = pygame.display.set_mode((500, 500))
+    pygame.display.set_caption("2048")
 
 bg = pygame.image.load(r'images\background.png')
 tiles = [pygame.image.load(r'images\2.png'), pygame.image.load(r'images\4.png'), pygame.image.load(r'images\8.png'),
@@ -318,6 +318,7 @@ def main():
                     print(score)
 
 
-main()
+if __name__ == '__main__':
+    main()
 
 pygame.quit()
