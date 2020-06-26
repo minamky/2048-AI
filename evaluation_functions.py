@@ -1,7 +1,4 @@
-grid = [[0, 0, 0, 0],
-        [0, 2, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]]
+import copy
 
 
 def monotonicity(grid_):
@@ -14,7 +11,7 @@ def monotonicity(grid_):
     for y in range(4):
         x = 0
         while x < 4:
-            if grid[y][x] == 0:
+            if grid_[y][x] == 0:
                 x += 1
                 continue
             else:
@@ -39,7 +36,7 @@ def monotonicity(grid_):
     for x in range(4):
         y = 0
         while y < 4:
-            if grid[y][x] == 0:
+            if grid_[y][x] == 0:
                 y += 1
                 continue
             else:
@@ -57,7 +54,6 @@ def monotonicity(grid_):
 
 
 def search_non_zero(row, index):
-    next_ = 0
     for _ in range(index+1, 4):
         if row[_] != 0:
             next_ = _
@@ -72,7 +68,7 @@ def merges_and_empty(grid_, axis=1):
     for y in range(4):
         x = 0
         while x < 4:
-            if grid[y][x] == 0:
+            if grid_[y][x] == 0:
                 x += 1
                 empty += 1
                 continue
@@ -97,11 +93,34 @@ def merges_and_empty(grid_, axis=1):
 
 # counts number of empty squares and potential merges
 def total_empty_and_merges(grid_):
+    total = 0
     _grid = []
+    # transpose the grid
     for x in range(4):
         row = []
         for y in range(4):
+            total += grid_[y][x]
             row.append(grid_[y][x])
         _grid.append(row)
     return [merges_and_empty(grid_)[0] + merges_and_empty(_grid, axis=0)[0],
-            merges_and_empty(grid_)[1] + merges_and_empty(_grid, axis=0)[1]]
+            merges_and_empty(grid_)[1] + merges_and_empty(_grid, axis=0)[1],
+            total]
+
+
+# returns the probability of a particular grid happening AFTER a movement
+def probabilities(grid_):
+    empty_spaces = total_empty_and_merges(grid_)[0]
+    if empty_spaces == 0:
+        return None
+    empty_spaces = 1/empty_spaces
+    probability_array = []
+    for y in range(4):
+        for x in range(4):
+            if grid_[y][x] == 0:
+                grid_1 = copy.deepcopy(grid_)
+                grid_2 = copy.deepcopy(grid_)
+                grid_1[y][x] = 2
+                grid_2[y][x] = 4
+                probability_array.append([grid_1, 0.9*empty_spaces])
+                probability_array.append([grid_2, 0.1*empty_spaces])
+    return probability_array
