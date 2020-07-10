@@ -14,7 +14,8 @@ tiles = [pygame.image.load(r'images\2.png'), pygame.image.load(r'images\4.png'),
          pygame.image.load(r'images\16.png'), pygame.image.load(r'images\32.png'),
          pygame.image.load(r'images\64.png'), pygame.image.load(r'images\128.png'),
          pygame.image.load(r'images\256.png'), pygame.image.load(r'images\512.png'),
-         pygame.image.load(r'images\1024.png'), pygame.image.load(r'images\2048.png')]
+         pygame.image.load(r'images\1024.png'), pygame.image.load(r'images\2048.png'),
+         pygame.image.load(r'images\4096.png')]
 
 # initialise the grid
 grid = [[0, 0, 0, 0],
@@ -210,6 +211,15 @@ def check_game_over(grid_):
         return False
 
 
+def check_max(grid_):
+    highest = 0
+    for y in range(len(grid)):
+        for x in range(len(grid)):
+            if grid_[y][x] > highest:
+                highest = grid_[y][x]
+    return highest
+
+
 # main loop for terminal
 def main_terminal():
     global grid
@@ -393,33 +403,28 @@ def main_ai():
     while run:
         if check_game_over(grid):
             print("GAME OVER")
-            return print(score)
+            return print(score, check_max(grid))
         move = ai.get_best_move(grid)
-        print(move)
         if move == 'UP':
             grid = up(grid, True)
             spawn_tile(grid)
             generate_tiles()
             redraw_screen()
-            print(score)
         elif move == 'DOWN':
             grid = down(grid, True)
             spawn_tile(grid)
             generate_tiles()
             redraw_screen()
-            print(score)
         elif move == 'LEFT':
             grid = left(grid, True)
             spawn_tile(grid)
             generate_tiles()
             redraw_screen()
-            print(score)
         elif move == 'RIGHT':
             grid = right(grid, True)
             spawn_tile(grid)
             generate_tiles()
             redraw_screen()
-            print(score)
 
 
 # if __name__ == '__main__':
