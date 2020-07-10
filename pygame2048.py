@@ -405,26 +405,31 @@ def main_ai():
             print("GAME OVER")
             return print(score, check_max(grid))
         move = ai.get_best_move(grid)
+        print(move)
         if move == 'UP':
             grid = up(grid, True)
             spawn_tile(grid)
             generate_tiles()
             redraw_screen()
+            print(score)
         elif move == 'DOWN':
             grid = down(grid, True)
             spawn_tile(grid)
             generate_tiles()
             redraw_screen()
+            print(score)
         elif move == 'LEFT':
             grid = left(grid, True)
             spawn_tile(grid)
             generate_tiles()
             redraw_screen()
+            print(score)
         elif move == 'RIGHT':
             grid = right(grid, True)
             spawn_tile(grid)
             generate_tiles()
             redraw_screen()
+            print(score)
 
 
 # if __name__ == '__main__':
