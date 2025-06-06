@@ -75,7 +75,7 @@ class testGame:
         # smoothness_score = evaluation_functions.smoothness_heuristic(grid_) * self.smoothness_weight
 
         clustering_score = evaluation_functions.clustering(grid_) * self.clustering_weight
-        largeScattered_score = evaluation_functions.penalize_large_scattered(grid_) * self.penalize_large_scattered_weight
+        largeScattered_score = evaluation_functions.penalize(grid_) * self.penalize_large_scattered_weight
         min_adjacent_diff = evaluation_functions.min_adjacent_diff(grid_) * self.min_adjacent_diff_weight
 
         utility += corner_score + chain + clustering_score + largeScattered_score + min_adjacent_diff  
@@ -251,7 +251,7 @@ if __name__ == "__main__":
     
     print("only corner")
     flags = {"use_corner": True}
-    verify_single_config()
+    verify_single_config(flags)
     
     # print("smoothness")
     # flags = {"use_smoothness": True}
@@ -284,5 +284,5 @@ if __name__ == "__main__":
     
     print("all")
     flags={"use_snake": True, "use_corner": True, "use_smoothness": True, "use_clustering": True, "penalize_large_scattered": True, "use_min_adjacent_diff": True
-    }
+           }
     verify_single_config(flags)
